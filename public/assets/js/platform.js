@@ -414,7 +414,7 @@ if(localStorage.getItem("emailBD") && localStorage.getItem("user")){
                     </div>
                     <div class="option_user">
                         <div class="subdiv" id="Period${id_reg}"><img src="./assets/img/periodicTrue.png" alt="periodico"></div>
-                        <div class="subdiv" id="Edit${id_reg}"><img src="./assets/img/edit.png" alt="editable"></div>
+                        <div class="subdiv" id="Edit${id_reg}"><img src="./assets/img/edit.PNG" alt="editable"></div>
                         <div class="subdiv" id="del${id_reg}"><img src="./assets/img/delete.png" alt="eliminar"></div>
                     </div>
                 </div>
