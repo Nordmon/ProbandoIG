@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href="assets/css/style_log.css">
+  <title>Bienvenido a I&G</title>
+
+  <link href="assets/img/faicon.png" rel="icon">
+  <link href="assets/img/faicon.png" rel="apple-touch-icon">
+
+ 
+  <script src="assets/js/funciones.js" type="module"></script>
+  
+  <script>
+
+
+  function togglePasswordVisibility() {
+    var passInput = document.getElementById("pass2");
+    if (passInput.type === "password") {
+      passInput.type = "text";
+
+    } else {
+      passInput.type = "password";
+    }
+  }
+
+  </script>
+
+  
+</head>
+
+<body>
+
+    
+    <div class="flip-card">
+        <div class="flip-card-inner">
+            <section class="form-register" id="seccionLogin">
+                <div class="log_Min"> 
+                    <img src="./assets/img/LOGO150px.png">
+                    <h4><div class="flip-card-toggle" id="flip-card-toggle">Login</div>/<div class="flip-card-toggle-inac" id="flip-card-toggle-inac" >Registro</div>
+                    </h4>
+                </div>
+                <img src="./assets/img/carga.gif" id="carga1" class="loading">
+                <input class="controls" type="text" name="email" id="nombres" placeholder="Ingrese su Email">
+                <div id="msgSucess" class="msgCorrecto">Enhorabuena, su registro ha sido satisfactorio. <br>Por favor revise su email para validación.<br> PINCHA PARA ACCEDER</div>
+                <div id="Email_warning" class="warnings"></div>
+                <input class="controls" type="password" name="correo" id="pass" placeholder="Ingrese su Contraseña">
+                <div id="Pass_warning" class="warnings"></div>
+                <div><p>Estoy de acuerdo con <a href="#">Terminos y Condiciones</a></p></div>
+                <input class="botons" type="submit" value="Entrar" id="Mandar_form_login">
+                <p><a href="#">¿Contraseña perdida?</a></p>
+                
+            </section>
+
+            <section class="form-login" >
+                <div class="log_Min"> 
+                    <img src="./assets/img/LOGO150px.png">
+                    <h4><div class="flip-card-toggle2-inac" id="flip-card-toggle2-inac">Login</div>/<div class="flip-card-toggle2" id="flip-card-toggle2">Registro</div></h4>
+                </div>
+                <img src="./assets/img/carga.gif" id="carga2" class="loading">
+                <input class="controls" type="text" name="nombres" id="nombres2" placeholder="Ingrese su Usuario">
+                <div id="registro_usuario_warning" class="warnings"></div>
+                <input class="controls" type="email" name="correo" id="correo2" placeholder="Ingrese su Correo">
+                <div id="registro_email_warning" class="warnings"></div>
+
+                <div style="position: relative;">
+                    <input class="controls" type="password" name="correo" id="pass2" placeholder="Ingrese su Contraseña">
+                    <button class="boton_togle" onclick="togglePasswordVisibility()"><img src="./assets/img/mostrar.png" alt="Boton Mostrar"></button>
+                </div>
+                <!--  <input class="controls" type="password" name="correo" id="pass2" placeholder="Ingrese su Contraseña">  -->
+
+
+                <div id="registro_pass_warning" class="warnings"></div>
+                <p>Estoy de acuerdo con <a href="#">Terminos y Condiciones</a></p>
+                <input class="botons" type="submit" value="Registrarte" id="Mandar_form_register">
+                <p><a href="#">¿Contraseña perdida?</a></p>
+            </section>
+        </div>
+    </div>
+
+    
+
+        
+</body>
+
+    
+        
+</html>
