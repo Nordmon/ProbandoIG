@@ -14,7 +14,7 @@ app.use(express.urlencoded({extended:false}));
 
 app.use(express.static('public'));
 
-app.listen(process.env.PORT || 3000, ()=>{
+app.listen(3000, ()=>{
     dbConection();
     console.log("servidor iniciado localhost:3000");
 
