@@ -37,10 +37,10 @@ if(localStorage.getItem("emailBD") && localStorage.getItem("user")){
             
             seleccionbloqueHtml.insertAdjacentHTML('beforeend', bloqueLanzarUsuario(usuario,img));
             
-            const clickAreaUser=document.getElementById(`user${usuario}`);
-            clickAreaUser.addEventListener("click",()=>{
-                const h2 = clickAreaUser.querySelector("h2");
-                const imgenSeleccion = clickAreaUser.querySelector("img");
+            const pointerdownAreaUser=document.getElementById(`user${usuario}`);
+            pointerdownAreaUser.addEventListener("pointerdown",()=>{
+                const h2 = pointerdownAreaUser.querySelector("h2");
+                const imgenSeleccion = pointerdownAreaUser.querySelector("img");
                 localStorage.setItem("userSeleccionado", h2.id);
                 
                 localStorage.setItem("imgSeleccionado", imgenSeleccion.id);
@@ -58,7 +58,7 @@ if(localStorage.getItem("emailBD") && localStorage.getItem("user")){
         const imgBoxes=document.querySelectorAll('.imgBoxes');
         const SelctionImgUser=document.getElementById("ImgUserSelection");
         imgBoxes.forEach((box) => {
-            box.addEventListener('click', (e) => {
+            box.addEventListener('pointerdown', (e) => {
               const imgSeleccionUser=e.target.alt+".png";
               localStorage.setItem("imgSeleccionado", imgSeleccionUser);
               insertNewImg(id,localStorage.getItem("userSeleccionado"),imgSeleccionUser);
@@ -70,20 +70,20 @@ if(localStorage.getItem("emailBD") && localStorage.getItem("user")){
     const createNewUser=()=>{
 
         const boton = document.getElementById('newPerfil');
-        let firstClick=true;
-            boton.addEventListener('click', (event) => {
-                if(firstClick){
+        let firstpointerdown=true;
+            boton.addEventListener('pointerdown', (event) => {
+                if(firstpointerdown){
                     const contenido = boton.nextElementSibling;
                     contenido.style.display = 'block';
                     /* contenido.style.top = event.clientY + 'px';
                     contenido.style.left = event.clientX + 'px'; */
     
-                    firstClick=false;
+                    firstpointerdown=false;
                 }else{
                     
                     const contenido = boton.nextElementSibling;
                     contenido.style.display = 'none';
-                    firstClick=true;
+                    firstpointerdown=true;
                 }
     
             });
@@ -166,7 +166,7 @@ if(localStorage.getItem("emailBD") && localStorage.getItem("user")){
         };
 
             
-        selectionspaceImg.addEventListener('click',()=>{
+        selectionspaceImg.addEventListener('pointerdown',()=>{
 
             const changeImg=document.getElementById('ImgUserSelection');
             changeImg.style.display='grid';
@@ -195,7 +195,7 @@ if(localStorage.getItem("emailBD") && localStorage.getItem("user")){
             div_select3.style.display="none";
             
 
-            botonIngresos.addEventListener('click', function FirstButtIn() {
+            botonIngresos.addEventListener('pointerdown', function FirstButtIn() {
 
                 div_select.style.display="initial";
                 div_select2.style.display="none";
@@ -204,7 +204,7 @@ if(localStorage.getItem("emailBD") && localStorage.getItem("user")){
 
             });
             
-            botonGastos.addEventListener('click', function FirstButtGas() {
+            botonGastos.addEventListener('pointerdown', function FirstButtGas() {
 
                 div_select.style.display="none";
                 div_select2.style.display="initial";
@@ -212,14 +212,14 @@ if(localStorage.getItem("emailBD") && localStorage.getItem("user")){
                 div_superpuesto.style.display="none";
             });
             
-            botonCalendario.addEventListener('click', function FirstButtCla() {
+            botonCalendario.addEventListener('pointerdown', function FirstButtCla() {
                 div_select.style.display="none";
                 div_select2.style.display="none";
                 div_select3.style.display="initial";
                 div_superpuesto.style.display="none";
             });
             
-            botonUsuario.addEventListener('click', function(e) {
+            botonUsuario.addEventListener('pointerdown', function(e) {
 
                 e.stopPropagation();
                 div_superpuesto.style.display="initial";
@@ -239,7 +239,7 @@ if(localStorage.getItem("emailBD") && localStorage.getItem("user")){
             div_select3.style.display="none";
             
 
-            botonIngresos.addEventListener('click', function SecondButtIn() {
+            botonIngresos.addEventListener('pointerdown', function SecondButtIn() {
 
                 div_select.style.display="initial";
                 div_select2.style.display="initial";
@@ -248,7 +248,7 @@ if(localStorage.getItem("emailBD") && localStorage.getItem("user")){
 
             });
             
-            botonGastos.addEventListener('click', function SecondButtGas() {
+            botonGastos.addEventListener('pointerdown', function SecondButtGas() {
 
                 div_select.style.display="initial";
                 div_select2.style.display="initial";
@@ -256,14 +256,14 @@ if(localStorage.getItem("emailBD") && localStorage.getItem("user")){
                 div_superpuesto.style.display="none";
             });
             
-            botonCalendario.addEventListener('click', function SecondButtCal() {
+            botonCalendario.addEventListener('pointerdown', function SecondButtCal() {
                 div_select.style.display="none";
                 div_select2.style.display="initial";
                 div_select3.style.display="initial";
                 div_superpuesto.style.display="none";
             });
             
-            botonUsuario.addEventListener('click', function(e) {
+            botonUsuario.addEventListener('pointerdown', function(e) {
 
                 e.stopPropagation();
                 div_superpuesto.style.display="initial";
@@ -282,28 +282,28 @@ if(localStorage.getItem("emailBD") && localStorage.getItem("user")){
             }
             displayAll();
 
-            botonIngresos.addEventListener('click', function() {
+            botonIngresos.addEventListener('pointerdown', function() {
 
                 displayAll();
                 div_superpuesto.style.display="none";
 
             });
             
-            botonGastos.addEventListener('click', function() {
+            botonGastos.addEventListener('pointerdown', function() {
 
                 displayAll();
                 div_superpuesto.style.display="none";
 
             });
             
-            botonCalendario.addEventListener('click', function() {
+            botonCalendario.addEventListener('pointerdown', function() {
 
                 displayAll();
                 div_superpuesto.style.display="none";
 
             });
             
-            botonUsuario.addEventListener('click', function(e) {
+            botonUsuario.addEventListener('pointerdown', function(e) {
 
                 e.stopPropagation();
                 div_superpuesto.style.display="initial";
@@ -516,12 +516,12 @@ if(localStorage.getItem("emailBD") && localStorage.getItem("user")){
 
                 }
                     
-                divEditable.addEventListener('click', () => {
+                divEditable.addEventListener('pointerdown', () => {
 
                     ActualizarReg(id_reg);
                 });
                 
-                divEliminar.addEventListener('click', () => {
+                divEliminar.addEventListener('pointerdown', () => {
                     let tip=0;
                     lanzarBorradoReg(id_reg,cant,tip);
                     const seleccionRegistro=document.getElementById(id_reg);
@@ -563,12 +563,12 @@ if(localStorage.getItem("emailBD") && localStorage.getItem("user")){
                     divPeriodico.style.display="none";
                 }
                     //EVENTOS PARA LOS ELEMENTOS DE NUEVO REGISTRO
-                divEditable.addEventListener('click', () => {
+                divEditable.addEventListener('pointerdown', () => {
                     ActualizarReg(id_reg);
                     
                 });
                 
-                divEliminar.addEventListener('click', () => {
+                divEliminar.addEventListener('pointerdown', () => {
                 let tip=1;
                 lanzarBorradoReg(id_reg,cant,tip);
                     const seleccionRegistro=document.getElementById(id_reg);                    
@@ -595,7 +595,7 @@ if(localStorage.getItem("emailBD") && localStorage.getItem("user")){
 
                 column.insertAdjacentHTML('beforeend', BotonNuevoING);  
                 const BotNewING=document.getElementById('BotonNuevoING');  
-                BotNewING.addEventListener('click',()=>{
+                BotNewING.addEventListener('pointerdown',()=>{
                 const IdLive="Volatile"+contadorIdLive;
                 contadorIdLive+=10;
 
@@ -607,7 +607,7 @@ if(localStorage.getItem("emailBD") && localStorage.getItem("user")){
                     const containers2=document.getElementById('cont_reg2');
 
 
-                    cierraPestania2.addEventListener('click',()=>{
+                    cierraPestania2.addEventListener('pointerdown',()=>{
                         
                         while (containers2.firstChild) {
                             containers2.firstChild.remove();
@@ -619,7 +619,7 @@ if(localStorage.getItem("emailBD") && localStorage.getItem("user")){
 
                     lanzaPeriodicidad(2);
                     
-                    SelectSubmitIng.addEventListener('click',()=>{
+                    SelectSubmitIng.addEventListener('pointerdown',()=>{
                         
                         const selecPeriodic = document.getElementById('Periodici2').value;
                         const txtoRegIng=document.getElementById("TextRegistro2").value;
@@ -717,7 +717,7 @@ if(localStorage.getItem("emailBD") && localStorage.getItem("user")){
                 
                 const IdLive="volatile"+contadorIdLive;
                 contadorIdLive+=10;
-                BotNewGAS.addEventListener('click',()=>{
+                BotNewGAS.addEventListener('pointerdown',()=>{
                     BotNewGAS.remove();
                     column2.insertAdjacentHTML('beforeend', newValueForm(1));
                     lanzoCategorias(true,false);
@@ -725,7 +725,7 @@ if(localStorage.getItem("emailBD") && localStorage.getItem("user")){
                     const containers1=document.getElementById('cont_reg1');
                     const cierraPestania1=document.getElementById("cierraPes1");
                     
-                    cierraPestania1.addEventListener('click',()=>{
+                    cierraPestania1.addEventListener('pointerdown',()=>{
                     
                         while (containers1.firstChild) {
                             containers1.firstChild.remove();
@@ -737,7 +737,7 @@ if(localStorage.getItem("emailBD") && localStorage.getItem("user")){
 
                     lanzaPeriodicidad(1);
 
-                    SelectSubmitGas.addEventListener('click',()=>{
+                    SelectSubmitGas.addEventListener('pointerdown',()=>{
 
                         const categoriaSelecGas=document.getElementById("CategorySelect1").value;
                         let Periodicidad=document.getElementById("Periodici1").value;
@@ -1031,7 +1031,7 @@ if(localStorage.getItem("emailBD") && localStorage.getItem("user")){
 
             }
 
-            day.addEventListener("click",(e)=>{
+            day.addEventListener("pointerdown",(e)=>{
                 
                 fechaCaalendar.textContent = Daterecorrida;
 
@@ -1052,12 +1052,12 @@ if(localStorage.getItem("emailBD") && localStorage.getItem("user")){
                 
             }); 
 
-            seleccierre.addEventListener('click',()=>{
+            seleccierre.addEventListener('pointerdown',()=>{
                 EliminoVariables();
             });
 
             //alert(`has pulsado el dia ${dayNumber} del mes ${mes}:${mesEnString[mes]}  del año ${year}`)
-            selecciono_Ok.addEventListener("click",()=>{
+            selecciono_Ok.addEventListener("pointerdown",()=>{
 
                 if(Periodic.value=="true"){
                     numeroPeriodic=document.getElementById("NumeroSelectionado").value;
@@ -1292,7 +1292,7 @@ if(localStorage.getItem("emailBD") && localStorage.getItem("user")){
             const eliminarButton = document.createElement('button');
             eliminarButton.textContent = 'Eliminar';
 
-            eliminarButton.addEventListener('click', () => {
+            eliminarButton.addEventListener('pointerdown', () => {
             
                 divArticulo.remove();
 
