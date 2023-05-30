@@ -496,7 +496,7 @@ if(localStorage.getItem("emailBD") && localStorage.getItem("user")){
                     </div>
                     <div class="option_user">
                         <div class="subdiv" id="Period${id_reg}"><img src="./assets/img/periodicTrue.png" alt="periodico"></div>
-                        <div class="subdiv" id="Edit${id_reg}"><img src="./assets/img/edit.png" alt="editable"></div>
+                        <div class="subdiv" id="Edit${id_reg}"><img src="./assets/img/editable.png" alt="editable"></div>
                         <div class="subdiv" id="del${id_reg}"><img src="./assets/img/delete.png" alt="eliminar"></div>
                     </div>
                 </div>
@@ -1519,7 +1519,7 @@ if(localStorage.getItem("emailBD") && localStorage.getItem("user")){
         fetch('/valorTotal', EnvioId)
         .then(response => response.json())
         .then(data => {
-            if (data=='actualizado'){
+            if (data==true){
                 
                 localStorage.setItem("CTotal",CtotalLiquido);
                 

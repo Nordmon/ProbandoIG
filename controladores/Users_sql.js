@@ -200,3 +200,17 @@ export function actualizacionImg(id,imgUpdate, userUpdate){
     });
   })
 }
+export function actualizoLiquidoTotal(userId, valor, tipo){
+  return new Promise((resolve, reject) => {
+
+    Usuario.update({ liquido_total: valor }, { where: { id: userId } })
+    .then(() => {
+      resolve (true);
+    })
+    .catch((error) => {
+      reject("Ha ocurrido un error al actualizar el usuario:", error);
+    });
+
+  })
+
+}

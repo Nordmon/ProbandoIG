@@ -1,6 +1,6 @@
 import express from 'express';
 import bcrypt from 'bcryptjs';
-import { hacerConsultaId, hacerInsert,hacerConsultaEmail, hacerInsertRegistros,hacerBorradoDeRegistro,actualizacionImg} from '../controladores/Users_sql.js';
+import { hacerConsultaId, hacerInsert,hacerConsultaEmail, hacerInsertRegistros,hacerBorradoDeRegistro,actualizacionImg,actualizoLiquidoTotal} from '../controladores/Users_sql.js';
 import { mandarEmail } from '../controladores/mail_send.js'
 import nodemailer from 'nodemailer';
 import bodyParser from 'body-parser';
@@ -139,9 +139,9 @@ router.post('/inserto_reg',async (req,res)=>{
     hacerInsertRegistros(req.body.id, req.body.categoria, req.body.tipo, req.body.descripcion, req.body.cantidad, req.body.dia_fecha,req.body.user_img,req.body.periodicidad,req.body.numPeriodicidad)
     .then(resultados =>{
         if(resultados){
-            res.json("Registro insertado con exito!!")
+            res.json(resultados)
         }else{
-            res.json("Registro No ha sido insertado")
+            res.json(resultados)
         }
         
     })
@@ -153,9 +153,9 @@ router.post('/Borrar', async (req,res)=>{
     hacerBorradoDeRegistro(idRegistro)
     .then(resultados =>{
         if(resultados){
-            res.json("Registro borrado con exito!!")
+            res.json(resultados)
         }else{
-            res.json("Registro No ha sido borrado")
+            res.json(resultados)
         }
         
     })
@@ -173,6 +173,19 @@ router.post('/actualizoImg', async (req,res)=>{
 
     }) 
 
+
+})
+router.post('/valorTotal', async (req, res)=>{
+
+    actualizoLiquidoTotal(req.body.id, req.body.cantTotal, req.body.tipo)
+    .then(resultados =>{
+        if(resultados){
+            res.json(resultados)
+        }else{
+            res.json(resultados)
+        }
+        
+    })
 
 })
 
