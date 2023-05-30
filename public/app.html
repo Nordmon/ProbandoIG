@@ -8,7 +8,7 @@
   <title>Bienvenido a I&G</title>
 
   <link href="assets/img/faicon.png" rel="icon">
- 
+  <link href="assets/img/faicon.png" rel="apple-touch-icon">
 
   <script src="assets/js/platform.js" type="text/javascript"></script>
   <!-- <script src="assets/js/funciones.js" type="module"></script> -->
@@ -20,14 +20,14 @@
 
 <body onload="arranque()">
   <div id="mensaje">Registro insertado</div>
+  <div class="desabilitador2">
+    <div id="seleccion_usuario" class="div-userselection user_selection">
+      <div class="Usuarios" id="insertarUser">
+        <div class="titulo" ><h2>Seleccion <br>Usuario</h2></div>  
 
-  <div id="seleccion_usuario" class="div-userselection user_selection">
-    <div class="Usuarios" id="insertarUser">
-      <div class="titulo" ><h2>Seleccion <br>Usuario</h2></div>  
-
+      </div>
     </div>
   </div>
-
   <div class="container">
     <div class="column" id="columnRegister">
       <h2 class="h2Tittle">INGRESOS</h2>
@@ -96,8 +96,8 @@
           <img id="newPerfil" src="./assets/img/bot_mas.png" alt="boton nuevo">
           <div class="entrada_newUser">
             <h3>Nuevo Usuario:</h3>
-            <input id="" class="controls newuserPanel" type="text" name="NuevoUsuario" placeholder="Introduce Usuario"><br>
-            <input class="botonSubmit" type="submit" value="OK">
+            <input id="introducirNewUser" class="controls newuserPanel" type="text" name="NuevoUsuario" placeholder="Introduce Usuario"><br>
+            <input id="botoninsrt" class="botonSubmit" type="submit" value="OK">
           </div>
           <p>Añadir Perfil</p>
         </div>
@@ -110,15 +110,16 @@
     </div>
 
     <div class="super_abajo">
-      <section><h1>Perfil de Usuario</h1>
-        <p>Usted tiene un vivel de : <span>PERFIL SIN VERIFICAR</span></p>
-        <p>No podrá almacenar datos en la base de datos. La informacion será eliminada al cerrar la sesión.</p>
-        <p>Para verificar pulse en Verificación.</p>
+      <section><h1>Balance Total</h1>
+        <p>Usted tiene un liquido total de :<br> </p>
+        <input id="liquidoTotal" type="number"></input>€<input id="actualizarTotal" value="OK" ></input>
+        <p>Puede modificar este valor, solo tomará los ingresos y gastos que ya hayan tenido lugar apartir de la fecha de modificacion de este valor.</p>
+        <p>Para Modificarlo pulse aqui.</p>
       </section>
       <section><h2>Email: </h2><span id="EmailUserPerfil">Fulanito@gmail.com</span><input class="boton_perfil" type="submit" value="Verificar Email" id="Verificado">
       </section>
-      <section><h2>Contraseña </h2><span>*******</span><input class="boton_perfil" type="submit" value="Cambio Contraseña" id="NewContraseña">
-      </section>
+      <section><h2>Contraseña </h2><span>*******</span><input class="boton_perfil" type="submit" value="Cambio Contraseña" id="NewContraseña"></section>
+      <section ><input class="boton_perfil cerrar_perfil" type="submit" value="CERRAR SESION" id="botCierreSesion"></section>
 
       <div class="contact_form">Contacto</div>
     </div>
@@ -162,37 +163,37 @@
       </div>            
     </div>          
   </div>
+<div class="desabilitador">
+    <div class="div-superpuesto ImgUserSelection" id="ImgUserSelection">
+      <h1>Seleccione Avatar</h1>
 
-  <div class="div-superpuesto ImgUserSelection" id="ImgUserSelection">
-    <h1>Selecciona Avatar</h1>
+      <div class="imgBoxes">
+        <img src="./assets/img/clients/logo_user.png" alt="logo_user">
+      </div>
+      <div class="imgBoxes">
+        <img src="./assets/img/clients/logo_user2.png" alt="logo_user2">
+      </div>
+      <div class="imgBoxes">
+        <img src="./assets/img/clients/logo_user3.png" alt="logo_user3">
+      </div>
+      <div class="imgBoxes">
+        <img src="./assets/img/clients/logo_user4.png" alt="logo_user4">
+      </div>
+      <div class="imgBoxes">
+        <img src="./assets/img/clients/logo_user5.png" alt="logo_user5">
+      </div>
+      <div class="imgBoxes">
+        <img src="./assets/img/clients/logo_user6.png" alt="logo_user6">
+      </div>
+      <div class="imgBoxes">
+        <img src="./assets/img/clients/logo_user7.png" alt="logo_user7">
+      </div>
+      <div class="imgBoxes">
+        <img src="./assets/img/clients/logo_user8.png" alt="logo_user8">
+      </div>
 
-    <div class="imgBoxes">
-      <img src="./assets/img/clients/logo_user.png" alt="logo_user">
     </div>
-    <div class="imgBoxes">
-      <img src="./assets/img/clients/logo_user2.png" alt="logo_user2">
-    </div>
-    <div class="imgBoxes">
-      <img src="./assets/img/clients/logo_user3.png" alt="logo_user3">
-    </div>
-    <div class="imgBoxes">
-      <img src="./assets/img/clients/logo_user4.png" alt="logo_user4">
-    </div>
-    <div class="imgBoxes">
-      <img src="./assets/img/clients/logo_user5.png" alt="logo_user5">
-    </div>
-    <div class="imgBoxes">
-      <img src="./assets/img/clients/logo_user6.png" alt="logo_user6">
-    </div>
-    <div class="imgBoxes">
-      <img src="./assets/img/clients/logo_user7.png" alt="logo_user7">
-    </div>
-    <div class="imgBoxes">
-      <img src="./assets/img/clients/logo_user8.png" alt="logo_user8">
-    </div>
-
-  </div>
-
+</div>
     
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>

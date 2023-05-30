@@ -5,7 +5,8 @@ if(localStorage.getItem("emailBD") && localStorage.getItem("user")){
     const emailBD = localStorage.getItem("emailBD");
     const user = localStorage.getItem("user");
     const id = localStorage.getItem("Id");
-    
+    var CtotalLiquido=parseFloat(localStorage.getItem("CTotal"));
+    let LiquidoTotalPerfil="";
     const reg_ing=[];
     const reg_gastos=[]; 
     let arrayFinal=[];
@@ -30,6 +31,8 @@ if(localStorage.getItem("emailBD") && localStorage.getItem("user")){
 
         const seleccion_usuario=document.getElementById('seleccion_usuario');
         const seleccionbloqueHtml=document.querySelector('.Usuarios');
+        const seleccionDesabilitador=document.querySelector('.desabilitador2');
+      
 
         for (let i = 0; i < divisionUser.length; i++) {
             const elemento = divisionUser[i];
@@ -45,35 +48,52 @@ if(localStorage.getItem("emailBD") && localStorage.getItem("user")){
                 
                 localStorage.setItem("imgSeleccionado", imgenSeleccion.id);
                 seleccion_usuario.style.display='none';
+                seleccionDesabilitador.style.display='none';
             })
           }
 
         
         seleccion_usuario.style.display='flex';
-
+        seleccionDesabilitador.style.display='initial';
 
     }
 //fin de seleccion de user
-    const SeleccionImagen=()=>{
-        const imgBoxes=document.querySelectorAll('.imgBoxes');
+    const SeleccionImagen=(usernew)=>{
         const SelctionImgUser=document.getElementById("ImgUserSelection");
-        imgBoxes.forEach((box) => {
-            box.addEventListener('click', (e) => {
-              const imgSeleccionUser=e.target.alt+".png";
-              localStorage.setItem("imgSeleccionado", imgSeleccionUser);
-              insertNewImg(id,localStorage.getItem("userSeleccionado"),imgSeleccionUser);
-              SelctionImgUser.style.display="none";
+        const div_desabilitador =document.querySelector('.desabilitador');
+        const imgBoxes=document.querySelectorAll('.imgBoxes');
+        
+            imgBoxes.forEach((box) => {
+                box.addEventListener('click', (e) => {
+                    const imgSeleccionUser=e.target.alt+".png";
+                    if(usernew){
+
+                        insertNewImg(id,usernew,imgSeleccionUser,'add');
+
+
+                    }else{
+
+                        localStorage.setItem("imgSeleccionado", imgSeleccionUser);
+                        insertNewImg(id,localStorage.getItem("userSeleccionado"),imgSeleccionUser,'update');
+                    }
+                    
+                    SelctionImgUser.style.display="none";
+                    div_desabilitador.style.display='none';
+                });
             });
-          });
+
+
     }
     
     const createNewUser=()=>{
 
         const boton = document.getElementById('newPerfil');
         let firstClick=true;
+        const contenido = boton.nextElementSibling;
             boton.addEventListener('click', (event) => {
+                
                 if(firstClick){
-                    const contenido = boton.nextElementSibling;
+                    
                     contenido.style.display = 'block';
                     /* contenido.style.top = event.clientY + 'px';
                     contenido.style.left = event.clientX + 'px'; */
@@ -81,23 +101,58 @@ if(localStorage.getItem("emailBD") && localStorage.getItem("user")){
                     firstClick=false;
                 }else{
                     
-                    const contenido = boton.nextElementSibling;
+                    
                     contenido.style.display = 'none';
+                    
                     firstClick=true;
                 }
+
     
             });
+
+            const BotonSubmit3=document.getElementById("botoninsrt");
+            
+            BotonSubmit3.addEventListener("click",()=>{
+                
+                const SelctionImgUser=document.getElementById("ImgUserSelection");
+                let introducirNewUser=document.getElementById("introducirNewUser");
+                const SelctionDesabilitador=document.querySelector(".desabilitador");
+
+                let validacion=introducirNewUser.value.replace(/[^a-zA-Z0-9_-ñ]/g, '');
+                if (validacion.length>10){
+                    
+                    mensaje.style.display='flex';
+                    mensaje.style.color= '#E43F31';
+                    mensaje.textContent='demasiado largo, 10 caracteres maximo'
+                    setTimeout(()=>{
+                        mensaje.style.display='none';
+                        mensaje.style.color= 'black';
+                    },3000 );
+                    return false;
+                }
+                SelctionImgUser.style.display="grid";
+                SelctionDesabilitador.style.display = 'initial';
+                introducirNewUser.value="";
+                introducirNewUser.textContent="";
+                contenido.style.display = 'none';
+                
+                firstClick=true;
+                
+                SeleccionImagen(validacion);
+
+            }); 
     }
      
     
 
     function arranque(){
         const SelctionImgUser=document.getElementById("ImgUserSelection");
-        
+        const div_desabilitador =document.querySelector('.desabilitador');
         if(sdadaivisionuser[1]=="default.png"){
             
             SelctionImgUser.style.display="grid";
             localStorage.setItem("userSeleccionado", sdadaivisionuser[0]);
+            div_desabilitador.style.display='initial';
             SeleccionImagen();
            
 
@@ -107,7 +162,7 @@ if(localStorage.getItem("emailBD") && localStorage.getItem("user")){
             }  
         }
 
-
+        
         /*   --------------------- BARRA DE ABAJO MUESTRA COLUMNAS Y PERFIL ----------------------- */
         
         const div_select = document.querySelector('.column');
@@ -122,8 +177,27 @@ if(localStorage.getItem("emailBD") && localStorage.getItem("user")){
         const emailUserPerfil = document.getElementById('EmailUserPerfil');
         const selectionspaceImg = document.getElementById('spaceImg');
         const seleccionCambioUser=document.getElementById('UsrChange');
+        const botCierreSesion=document.getElementById('botCierreSesion');
+        const boton_actualizaTotal=document.getElementById('actualizarTotal');
+        LiquidoTotalPerfil=document.getElementById('liquidoTotal');
+
+        
+        LiquidoTotalPerfil.value=CtotalLiquido.toFixed(2);
+        
         let updateUser=false;
 
+        
+        boton_actualizaTotal.addEventListener('click',()=>{
+            let cantActualizadaPeerfil=LiquidoTotalPerfil.value;
+            
+            actualizaLiquido(cantActualizadaPeerfil,'update');
+
+
+        });
+        botCierreSesion.addEventListener('click',()=>{
+            cerrarSesion();
+
+        });
 
 
 
@@ -170,6 +244,7 @@ if(localStorage.getItem("emailBD") && localStorage.getItem("user")){
 
             const changeImg=document.getElementById('ImgUserSelection');
             changeImg.style.display='grid';
+            div_desabilitador.style.display='initial';
             SeleccionImagen();
 
         })
@@ -223,7 +298,7 @@ if(localStorage.getItem("emailBD") && localStorage.getItem("user")){
 
                 e.stopPropagation();
                 div_superpuesto.style.display="initial";
-                
+
                 ActualizaUsuario();
 
                 quitarPerfil();
@@ -399,7 +474,7 @@ if(localStorage.getItem("emailBD") && localStorage.getItem("user")){
 
         })
 
-        const ConstruirRegistro=(cat, desc, cant, dia,id_reg,Img_user)=>{
+        const ConstruirRegistro=(cat, desc, cant, dia,id_reg,Img_user,user)=>{
                 
             return `
 
@@ -408,13 +483,20 @@ if(localStorage.getItem("emailBD") && localStorage.getItem("user")){
                     <div class="data_user">
                         <div class="Reg_category">${cat}, Día: ${dia}</div>
                         <div class="Reg_Description">
-                            <div class="User_logo"><img src="./assets/img/clients/${Img_user}" alt="user"></div>
+                            <div class="User_logo">
+                            
+                            <figure>
+                                <img src="./assets/img/clients/${Img_user}" alt="user">
+                                <figcaption>${user}</figcaption>
+                            </figure>                            
+                            
+                            </div>
                             <div class="Reg_Texto">${desc}<p><strong>${cant}€</strong><p></div>
                         </div>
                     </div>
                     <div class="option_user">
                         <div class="subdiv" id="Period${id_reg}"><img src="./assets/img/periodicTrue.png" alt="periodico"></div>
-                        <div class="subdiv" id="Edit${id_reg}"><img src="./assets/img/edit.PNG" alt="editable"></div>
+                        <div class="subdiv" id="Edit${id_reg}"><img src="./assets/img/edit.png" alt="editable"></div>
                         <div class="subdiv" id="del${id_reg}"><img src="./assets/img/delete.png" alt="eliminar"></div>
                     </div>
                 </div>
@@ -482,11 +564,8 @@ if(localStorage.getItem("emailBD") && localStorage.getItem("user")){
         // Formatea la fecha en el formato deseado
         const fechaFormateada = `${año}-${mes}-${dia}`;
         
-        const lanzoRegGas=(cat, desc, cant, fechaEntrada, id_reg, period, num_period,userImg)=>{
+        const lanzoRegGas=(cat, desc, cant, fechaEntrada, id_reg, period, num_period,userImg,user)=>{
             
-            
-           
-
             const id_seleccionado=id_reg;   
             const img=userImg; 
 
@@ -497,7 +576,7 @@ if(localStorage.getItem("emailBD") && localStorage.getItem("user")){
                 
                 cantTotGas+= cantidad;
                 
-                column2.insertAdjacentHTML('beforeend', ConstruirRegistro(cat, desc, cant, diaExtraido,id_reg,img));
+                column2.insertAdjacentHTML('beforeend', ConstruirRegistro(cat, desc, cant, diaExtraido,id_reg,img,user));
                 
                 //SELECCION DE LOS BOTONES DERECHOS 
                 const divPeriodico = document.getElementById('Period'+id_seleccionado);
@@ -523,7 +602,7 @@ if(localStorage.getItem("emailBD") && localStorage.getItem("user")){
                 
                 divEliminar.addEventListener('click', () => {
                     let tip=0;
-                    lanzarBorradoReg(id_reg,cant,tip);
+                    lanzarBorradoReg(id_reg,cant,tip,desc);
                     const seleccionRegistro=document.getElementById(id_reg);
                     
 
@@ -537,7 +616,7 @@ if(localStorage.getItem("emailBD") && localStorage.getItem("user")){
             }
         }
 
-        const lanzoRegIng=(cat, desc, cant, fechaEntrada, id_reg,period, num_period,userImg)=>{
+        const lanzoRegIng=(cat, desc, cant, fechaEntrada, id_reg,period, num_period,userImg,user)=>{
             
             const img=userImg; 
             let partes = fechaEntrada.split("-");
@@ -547,7 +626,7 @@ if(localStorage.getItem("emailBD") && localStorage.getItem("user")){
                 let cantidad=parseFloat(cant);
                 cantTotIng+= cantidad;
 
-            const ElmentoNuevo=column.insertAdjacentHTML('beforeend', ConstruirRegistro(cat, desc, cant, diaExtraido,id_reg,img));
+            const ElmentoNuevo=column.insertAdjacentHTML('beforeend', ConstruirRegistro(cat, desc, cant, diaExtraido,id_reg,img,user));
             
             
                 //SELECCION DE LOS BOTONES DERECHOS 
@@ -570,7 +649,7 @@ if(localStorage.getItem("emailBD") && localStorage.getItem("user")){
                 
                 divEliminar.addEventListener('click', () => {
                 let tip=1;
-                lanzarBorradoReg(id_reg,cant,tip);
+                lanzarBorradoReg(id_reg,cant,tip,desc);
                     const seleccionRegistro=document.getElementById(id_reg);                    
 
                     while (seleccionRegistro.firstChild) {
@@ -596,7 +675,7 @@ if(localStorage.getItem("emailBD") && localStorage.getItem("user")){
                 column.insertAdjacentHTML('beforeend', BotonNuevoING);  
                 const BotNewING=document.getElementById('BotonNuevoING');  
                 BotNewING.addEventListener('click',()=>{
-                const IdLive="Volatile"+contadorIdLive;
+                const IdLive="volatile"+contadorIdLive;
                 contadorIdLive+=10;
 
                     BotNewING.remove();
@@ -687,7 +766,7 @@ if(localStorage.getItem("emailBD") && localStorage.getItem("user")){
                             }
                             containers2.remove();
 
-                            lanzoRegIng(categoriaSelecIng, txtoRegIng, amountIng, fechaFormateada,IdLive,selecPeriodic,numeroMesesSelect,localStorage.getItem("imgSeleccionado"));
+                            lanzoRegIng(categoriaSelecIng, txtoRegIng, amountIng, fechaFormateada,IdLive,selecPeriodic,numeroMesesSelect,localStorage.getItem("imgSeleccionado"),localStorage.getItem("userSeleccionado"));
 
                             
                             construyeBotones();
@@ -792,7 +871,7 @@ if(localStorage.getItem("emailBD") && localStorage.getItem("user")){
                                 containers1.firstChild.remove();
                             }
                             containers1.remove();
-                            lanzoRegGas(categoriaSelecGas, txtoRegGas, amountGas, fechaFormateada,IdLive,Periodicidad,numeroMesesSelect,localStorage.getItem("imgSeleccionado"))
+                            lanzoRegGas(categoriaSelecGas, txtoRegGas, amountGas, fechaFormateada,IdLive,Periodicidad,numeroMesesSelect,localStorage.getItem("imgSeleccionado"),localStorage.getItem("userSeleccionado"))
                             
                             construyeBotones();
 
@@ -876,7 +955,7 @@ if(localStorage.getItem("emailBD") && localStorage.getItem("user")){
                             const [user,imgen]=userImgDiv;
                             
 
-                            lanzoRegIng(registro.categoria,registro.descripcion,registro.cantidad,registro.dia_fecha,registro.id,registro.periodicidad,registro.numeroMeses,imgen);
+                            lanzoRegIng(registro.categoria,registro.descripcion,registro.cantidad,registro.dia_fecha,registro.id,registro.periodicidad,registro.numeroMeses,imgen,user);
 
 
                         }
@@ -885,7 +964,7 @@ if(localStorage.getItem("emailBD") && localStorage.getItem("user")){
                             const userImgDiv=(registro.user_img).split(":");
                             const [user,imgen]=userImgDiv;
                             
-                            lanzoRegGas(registro.categoria,registro.descripcion,registro.cantidad,registro.dia_fecha,registro.id,registro.periodicidad,registro.numeroMeses,imgen);
+                            lanzoRegGas(registro.categoria,registro.descripcion,registro.cantidad,registro.dia_fecha,registro.id,registro.periodicidad,registro.numeroMeses,imgen,user);
                             
                         }
                         totGas.textContent=cantTotGas.toFixed(2);
@@ -1063,9 +1142,7 @@ if(localStorage.getItem("emailBD") && localStorage.getItem("user")){
                     numeroPeriodic=document.getElementById("NumeroSelectionado").value;
                 }
                     //------------------------VALIDACION DE LOS DATOS INTRODUCIDOS
-
                 const textFilter = seleccionDescription.value.replace(/[^a-zA-Z0-9_-ñ\s]/g, '');
-                
                 if(fechaCaalendar.textContent===Daterecorrida){
                     if( selectionCant.value=="" || textFilter=="" || textFilter.length>50 || numeroPeriodic>24){
 
@@ -1127,7 +1204,7 @@ if(localStorage.getItem("emailBD") && localStorage.getItem("user")){
 
                         promesaNuevoRegistro().then(()=>{
                             setTimeout(() => {
-                                location.reload()
+                                location.reload();
                                 }, 2000);
                             
                         }) 
@@ -1201,6 +1278,7 @@ if(localStorage.getItem("emailBD") && localStorage.getItem("user")){
 
         const mensaje = document.getElementById('mensaje');
         mensaje.style.display = 'block';
+        
         mensaje.textContent=`Registro insertado`;
         setTimeout(() => {
         mensaje.style.display = 'none';
@@ -1209,10 +1287,18 @@ if(localStorage.getItem("emailBD") && localStorage.getItem("user")){
     })
     .catch(error => console.log(error))
 
+        if(datos.tipo=='ing'){
+
+            actualizaLiquido(datos.cantidad,"add")
+
+        }else if(datos.tipo=='gas' ){
+
+            actualizaLiquido(datos.cantidad,"del")
+        }
     }
     
     //nuevo_Registro()
-    const lanzarBorradoReg=(id_reg,cant,tipoOpe)=>{
+    const lanzarBorradoReg=(id_reg,cant,tipoOpe,description)=>{
 
         const selecValorActualGAS=document.getElementById("TotGas");
         const selecValorActualING=document.getElementById("TotIng");
@@ -1228,7 +1314,10 @@ if(localStorage.getItem("emailBD") && localStorage.getItem("user")){
         }
         
         const datosDeId = { 
-            id:id_reg   
+            id:id_reg,
+            descript:description ,
+            id_user:id,
+            cant:cant 
         };
         const EnvioId = {
             method: 'POST',
@@ -1240,12 +1329,20 @@ if(localStorage.getItem("emailBD") && localStorage.getItem("user")){
         fetch('/Borrar', EnvioId)
         .then(response => response.json())
         .then(data => {
+            
+            if(tipoOpe==1){
 
+                actualizaLiquido(cant,"del");
+    
+            }else if(tipoOpe==0 ){
+                
+                actualizaLiquido(cant,"add");
+            }
         })
 
     }
     const ActualizarReg=(id_reg)=>{
-        console.log(`el id ${id_reg} sera actualizado  de la base de datos.` );
+        alert(`Funcion no disponible, eliminala y vuelve a crearla.`);
 
     }
 
@@ -1314,13 +1411,14 @@ if(localStorage.getItem("emailBD") && localStorage.getItem("user")){
 
     }
 
-    const insertNewImg=(id, usuario,imagen)=>{
+    const insertNewImg=(id, usuario,imagen, op)=>{
 
 
         const datos={
             id:id,
             imgen:imagen,
-            user:usuario
+            user:usuario,
+            tipo_op:op
         }
     
         const requestOptions = {
@@ -1335,7 +1433,7 @@ if(localStorage.getItem("emailBD") && localStorage.getItem("user")){
         .then(response => response.json())
         .then(data =>{
             
-            if(data=='true'){
+            if(data.validacion=='true'){
 
                 const mensaje = document.getElementById('mensaje');
                 mensaje.style.display = 'block';
@@ -1343,10 +1441,22 @@ if(localStorage.getItem("emailBD") && localStorage.getItem("user")){
 
                 setTimeout(() => {
                 mensaje.style.display = 'none';
+                location.reload();
                 }, 2000);
+                
 
                 const usuModified=localStorage.getItem('userSeleccionado')+':'+localStorage.getItem('imgSeleccionado');
-                localStorage.setItem("user", usuModified);
+                if(data.tOperacion=='update'){
+
+                    localStorage.setItem("user", usuModified);
+
+                }else if (data.tOperacion=='add'){
+                    const antiguoValor=localStorage.getItem('user');
+                    const nuevoValor = `${antiguoValor}, ${data.user}:${data.imagen}`;
+                    localStorage.setItem("user", '');
+                    localStorage.setItem("user", nuevoValor);
+                }
+                
                 spaceImg.innerHTML = "";
                 const selectionspaceImg = document.getElementById('spaceImg');
                 selectionspaceImg.insertAdjacentHTML('beforeend', `<img src="./assets/img/clients/${localStorage.getItem('imgSeleccionado')}" alt="user">`); 
@@ -1357,6 +1467,7 @@ if(localStorage.getItem("emailBD") && localStorage.getItem("user")){
 
                 setTimeout(() => {
                 mensaje.style.display = 'none';
+                location.reload();
                 }, 2000);
             }
 
@@ -1367,20 +1478,73 @@ if(localStorage.getItem("emailBD") && localStorage.getItem("user")){
         
     }
    
+    const cerrarSesion=()=>{
+
+
+        localStorage.clear();
+        
+           location.reload(); 
+        
+        
+
+    }
+
+    const actualizaLiquido=(valor, tipo)=>{
+
+        if(tipo=='add'){
+            let resultado=CtotalLiquido+parseFloat(valor);
+            CtotalLiquido=resultado;
+            LiquidoTotalPerfil.value=resultado.toFixed(2);
+        }else if(tipo=='del') {
+            let resultado=CtotalLiquido-parseFloat(valor);
+            CtotalLiquido=resultado;
+            LiquidoTotalPerfil.value=resultado.toFixed(2);
+        }else if(tipo=='update'){
+            LiquidoTotalPerfil.value, CtotalLiquido=(parseFloat(valor)).toFixed(2);
+            
+        }
+
+        const datos={
+            id:id,
+            cantTotal:CtotalLiquido,
+            tipo:tipo
+        }
+        const EnvioId = {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(datos)
+        };
+        fetch('/valorTotal', EnvioId)
+        .then(response => response.json())
+        .then(data => {
+            if (data=='actualizado'){
+                
+                localStorage.setItem("CTotal",CtotalLiquido);
+                
+            }
+            
+        })
+    }
+
 }else{
     window.location.href = "login.html";
 }
 
- //Al pulsar nuevo usuario debe dirigirse eliminara el mas y saldra un pequeño formulario una vez metido el nombre lanzar la eleccion de avatar
-//CREAR LA FUNCION DE UPDATE DE LA BASE DE DATOS Y ACTUALICE EL USUARIO SUMANDO UN NUEVO VALOR, ENVIAR EL USUARIO YA EXISTENTE Y CARGADO SUMAR OTRO NUEVO.
+ 
+
 //empezar a configurar el validado de usuario por correo 
 
-//EL UPDATE DE DATOS EN LA TABLA
-//MIRAR LA MANERA DE LLEVAR UNA CUENTA EL TOTAL Y PODER ELIMINARLO, 
-//CREAR UN CIERRE DE SESION EN PANEL USUARIO
-//FUNCIONALIDAD PARA LOS DIV FORMULARIOS QUE SE PUEDAN ARRASTRAR
-//bloquear todo lo demas cuando esta un div de seleccion de user
-//cambiar para que salga primero el panel de seleccion de imagen tras entrar
+
+
+
+//BOTON PARA IR ATRAS EN LA SELECCION DE IMAGEN
+
+//Un formulario de Contacto
+//crear la politica de noseq
+
+
 
 
 

@@ -52,12 +52,9 @@ if(localStorage.getItem("emailBD") && localStorage.getItem("user")){
                         .then(datos2 => {
 
                         
-                    console.log("EL DATA LLEGA BIEN DAOTS ");
-                    
-                    console.log(datos2.fail);
 
                     
-                    tramitarEntrada(datos2.idDB,datos2.mail,datos2.fail,datos2.usuario);
+                    tramitarEntrada(datos2.idDB,datos2.mail,datos2.fail,datos2.usuario,datos2.CTotal);
 
 
                     //AQUI PONDRE LO QUE DESEE QUE HAGA SEGUN EL VALOR FAIL RETORNADO.
@@ -104,8 +101,6 @@ if(localStorage.getItem("emailBD") && localStorage.getItem("user")){
         const valEmail=validarCampoEmail(email_register);
 
         const valPass=validarContrasena(usuario_pass_register);
-
-        console.log("el usuario admite o no "+ usuario_register);
 
 
         if( valEmail===true && valUser===true && valPass===true) {
@@ -310,8 +305,8 @@ if(localStorage.getItem("emailBD") && localStorage.getItem("user")){
     function validarUsuario(campoUser) {
 
         let expresion = /^[a-zA-Z0-9-_#@ñ]+$/;
-        if (campoUser.length < 3){
-            const ms3="Usuario debe ser mayor de 3 caracteres.";
+        if (campoUser.length < 3 || campoUser.length > 10){
+            const ms3="Usuario debe ser mayor de 3 caracteres y menor de 10.";
             return ms3;
         }else{
             if (!expresion.test(campoUser.value)) {
@@ -344,7 +339,7 @@ if(localStorage.getItem("emailBD") && localStorage.getItem("user")){
         }
     }
 
-    function tramitarEntrada(Id,emailBD,PosibleFallo,user){
+    function tramitarEntrada(Id,emailBD,PosibleFallo,user,liquido){
 
         
 
@@ -359,6 +354,7 @@ if(localStorage.getItem("emailBD") && localStorage.getItem("user")){
             localStorage.setItem("Id", Id)
             localStorage.setItem("emailBD", emailBD);
             localStorage.setItem("user", user);
+            localStorage.setItem("CTotal",liquido);
 
             // Realizar la redirección a la página "/app.html"
             window.location.href = "/app.html";

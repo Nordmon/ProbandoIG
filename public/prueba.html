@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Calendario</title>
+  <style>
+    /* Estilos para el calendario */
+    /* Puedes ajustar los estilos según tus necesidades */
+    .calendar {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 10px;
+    }
+
+    .calendar .day {
+      text-align: center;
+    }
+
+    .calendar .header {
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <div id="calendarContainer"></div>
+
+  <script>
+    // Obtener el contenedor del calendario
+    const calendarContainer = document.getElementById('calendarContainer');
+
+// Crear una fecha para el mes actual
+const currentDate = new Date();
+const currentMonth = currentDate.getMonth();
+const currentYear = currentDate.getFullYear();
+
+// Generar el HTML del calendario
+const calendar = document.createElement('div');
+calendar.className = 'calendar';
+
+// Generar la cabecera del calendario
+const daysOfWeek = ['L', 'M', 'Mx', 'J', 'V', 'S', 'D'];
+for (let i = 0; i < 7; i++) {
+  const header = document.createElement('div');
+  header.className = 'header';
+  header.textContent = daysOfWeek[i];
+  calendar.appendChild(header);
+}
+
+// Obtener el primer día de la semana del mes actual
+const firstDayOfMonth = new Date(currentYear, currentMonth, 1).getDay()-1;
+
+const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
+
+// Generar los días del mes actual
+for (let i = 0; i < firstDayOfMonth + daysInMonth; i++) {
+  const day = document.createElement('div');
+  day.className = 'day';
+
+  // Calcular el número de día
+  const dayNumber = i - firstDayOfMonth + 1; // Ajustar el número del día para iniciar en 2
+  if (i >= firstDayOfMonth) {
+    day.textContent = dayNumber;
+  }
+
+  calendar.appendChild(day);
+}
+
+// Añadir el calendario al contenedor
+calendarContainer.appendChild(calendar);
+  </script>
+</body>
+</html>
