@@ -24,7 +24,7 @@ if(localStorage.getItem("emailBD") && localStorage.getItem("user")){
             return `
         
         <div class="img_box" id="user${usuario}">
-            <img id="${img}" src="assets/img/clients/${img}" >
+            <img id="${img}" src="assets/img/clients/${img}" alt="imag3">
             <h2 id="${usuario}">${usuario}</h2>
         </div>`
         };
