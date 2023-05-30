@@ -62,14 +62,15 @@ router.post('/login',async function(req,res){
         const use=await hacerConsultaEmail(mail_name);
 
         if (use){
-            console.log(use);
+            
             const idDB=use.id;
             const usuarioDB=use.user_name;
             const mailDB=use.email;
             const passDB=use.password_user;
+            let cTotal=use.liquido_total
             if(bcrypt.compareSync(password_user,passDB)){                
 
-                const datos = {idDB:idDB, mail:mailDB, validacion:"ingreso",  fail:"valido",usuario:usuarioDB};
+                const datos = {idDB:idDB, mail:mailDB,CTotal:cTotal, validacion:"ingreso",  fail:"valido",usuario:usuarioDB};
 
                 res.json(datos);
                 //res.redirect;
@@ -135,7 +136,7 @@ router.post('/registros', async (req,res)=>{
 })
 
 router.post('/inserto_reg',async (req,res)=>{
-    console.log(req.body.id);
+    
     hacerInsertRegistros(req.body.id, req.body.categoria, req.body.tipo, req.body.descripcion, req.body.cantidad, req.body.dia_fecha,req.body.user_img,req.body.periodicidad,req.body.numPeriodicidad)
     .then(resultados =>{
         if(resultados){
@@ -149,8 +150,12 @@ router.post('/inserto_reg',async (req,res)=>{
 
 router.post('/Borrar', async (req,res)=>{
 
-    let idRegistro=req.body.id;
-    hacerBorradoDeRegistro(idRegistro)
+     console.log(req.body.id);
+    console.log(req.body.descript);
+    console.log(req.body.id_user);
+    console.log(req.body.cant); 
+
+    hacerBorradoDeRegistro(req.body.id,req.body.descript,req.body.id_user,req.body.cant)
     .then(resultados =>{
         if(resultados){
             res.json(resultados)
@@ -163,18 +168,20 @@ router.post('/Borrar', async (req,res)=>{
 })
 router.post('/actualizoImg', async (req,res)=>{
 
-    actualizacionImg(req.body.id,req.body.imgen,req.body.user)
+    actualizacionImg(req.body.id,req.body.imgen,req.body.user,req.body.tipo_op)
     .then(result=>{
         if(result){
-            res.json("true")
+            
+            res.json(result)
         }else{
-            res.json("false")
+            res.json(result)
         }
 
     }) 
 
 
 })
+
 router.post('/valorTotal', async (req, res)=>{
 
     actualizoLiquidoTotal(req.body.id, req.body.cantTotal, req.body.tipo)
@@ -188,7 +195,6 @@ router.post('/valorTotal', async (req, res)=>{
     })
 
 })
-
 /* 
 
 function mandarEmail(correo,usuario){

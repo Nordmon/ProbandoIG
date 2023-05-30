@@ -54,18 +54,18 @@ export function hacerInsertRegistros(id, categoria, tipo, descripcion, cantidad,
         registros.create(registroNuevo)
         .then(function(nuevoRegistro) {
             
-            console.log('Registro insertado con éxito:', nuevoRegistro);
+            
             resolve (nuevoRegistro);
         })
         .catch(function(error) {
-            console.log('Error al insertar registro:', error);
+           
             reject (error);
         });
 
         registroNuevo.dia_fecha=fechaFormateada;
       }
     }else if(periodicidad=="false"){
-      console.log("entre en el else con : "+registroNuevo)
+      
     registros.create(registroNuevo)
       .then(function(nuevoRegistro) {
           
@@ -127,23 +127,55 @@ export function hacerInsert(email,usuario,password_cript){
         });
     });
 }
-export function hacerBorradoDeRegistro(id) {
+export function hacerBorradoDeRegistro(id,descrip,id_user,cant) {
   return new Promise((resolve, reject) => {
-    registros.destroy({
+    let id_original=id+"";
+    let id_buscado='volatile';
+
+
+    if(id_original.includes(id_buscado)){
+      registros.destroy({
+        where: {
+          id_user: id_user,
+          descripcion:descrip,
+          cantidad:cant
+        }
+        })
+            .then(() => {
+          resolve('El registro ha sido eliminado exitosamente');
+        })
+        .catch((error) => {
+          reject.error('Error al eliminar el registro', error);
+        });
+
+    }else{
+          registros.destroy({
       where: {
         id: id
       }
-    })
-    .then(() => {
-      resolve('El usuario ha sido eliminado exitosamente');
-    })
-    .catch((error) => {
-      reject.error('Error al eliminar el usuario:', error);
-    });
+      })
+          .then(() => {
+        resolve('El registro ha sido eliminado exitosamente');
+      })
+      .catch((error) => {
+        reject(error);
+      });
+    }
+
+
   });
 }
 
-export function actualizacionImg(id,imgUpdate, userUpdate){
+export function actualizacionImg(id,imgUpdate, userUpdate, op){
+  
+  
+  const datosDevueltos={
+
+    validacion:'true',
+    tOperacion:op,
+    imagen:imgUpdate,
+    user:userUpdate
+  }
 
   return new Promise((resolve, reject) => {
     Usuario.findOne({
@@ -153,8 +185,7 @@ export function actualizacionImg(id,imgUpdate, userUpdate){
       attributes: ['user_name'],
     })
       .then((usuario) => {
-        
-        
+
         const array = usuario.user_name.split(', ');
         const arrayFinal=[];
         array.forEach((elemento) => {
@@ -173,8 +204,17 @@ export function actualizacionImg(id,imgUpdate, userUpdate){
             break; // salir del bucle una vez que se ha actualizado el objeto
           }
         }
+        let UserReconst='';
+        if (op=='add'){
+          
+          UserReconst = usuario.user_name+`, ${userUpdate}:${imgUpdate}`;
 
-        const UserReconst = arrayFinal.map(obj => `${obj.usuario}:${obj.img}`).join(', ');
+        }else if(op=='update'){
+          
+          UserReconst = arrayFinal.map(obj => `${obj.usuario}:${obj.img}`).join(', ');
+
+        }
+
 
         Usuario.update(
           {
@@ -187,10 +227,10 @@ export function actualizacionImg(id,imgUpdate, userUpdate){
           }
         )
           .then(() => {
-            resolve `El campo user_name se ha actualizado correctamente para el usuario con ID ${id}`;
+            resolve (datosDevueltos);
           })
           .catch((error) => {
-            console.log(`Error al actualizar el campo user_name para el usuario con ID ${id}: ${error}`);
+            reject `Error al actualizar el campo user_name para el usuario con ID ${id}: ${error}`;
           }); 
 
         

@@ -17,6 +17,11 @@ const Usuario = db.define('users',{
 
         type:DataTypes.STRING
 
+    },  
+    liquido_total:{
+
+        type:DataTypes.FLOAT
+
     }
 
 });
