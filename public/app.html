@@ -53,7 +53,7 @@
     <div class="column3">
         <h2 class="h2Tittle">CALENDARIO</h2>
         <div class="YearDiv">Año: 
-          <select id="yearSelect"></select>
+          <select id="yearSelect" name="yearSelect"></select>
             <option value="2023"></option> <!-- Opción por defecto -->
           </select>
         </div>
@@ -88,7 +88,7 @@
       <div class="div_top_perfil">
         <h2 id="currentUser">Usuario</h2>
         <div class="content-select">
-          <select id="UsrChange">
+          <select id="UsrChange" name="UsrChange">
             <option disabled selected>Cambiar</option>
           </select>
         </div>
@@ -134,14 +134,14 @@
       <div class="data_user">
         <div id="fecha" class="fechaSelectCalendar"></div>
         <div class="Reg_category">
-            <select class="CategorySelect" id="CategorySelectValue">
+            <select class="CategorySelect" id="CategorySelectValue" name="CategorySelectValue">
               <option value="Gas">Gasto</option>
               <option value="Ing">Ingreso</option>
             </select>
             <p>Tipo</p>        
         </div>
         <div class="Reg_category">
-          <select id="PeriodicValue">
+          <select id="PeriodicValue" name="PeriodicValue">
             <option value="false">No Periódico</option>
             <option value="true">Periódico</option>
           </select> 
